@@ -2,14 +2,18 @@ name: run scraper.py
 
 on:
   workflow_dispatch:
+    inputs:
+      ENDPOINT_URL:
+        description: 'Endpoint URL'
+        required: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
+ 
       - name: checkout repo content
-        uses: actions/checkout@v2 # checkout the repository content to GitHub runner
+        uses: actions/checkout@v2 # checkout the repository content to github runner
 
       - name: setup python
         uses: actions/setup-python@v4
@@ -20,6 +24,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: show installed packages
+        run: pip list
           
       - name: execute py script # run scraper.py
         env:
